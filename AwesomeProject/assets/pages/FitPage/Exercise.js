@@ -9,6 +9,7 @@ import {
   Button,
   ScrollView,
   FlatList,
+Image,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
@@ -82,6 +83,8 @@ export default function Exercise() {
       <Text>Estimated burned calories per minute: {exercise.met}</Text>
       <Text>Exercises: {exercise.category}</Text>
       <Text>Description: {exercise.description}</Text>
+      <Text>Description: {exercise.imageUrl}</Text>
+      <Image source={exercise.imageUrl} width={200} height={200}/>
     </>
   );
 }

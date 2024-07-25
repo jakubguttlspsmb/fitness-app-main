@@ -18,5 +18,7 @@ router.put("/:name", ExercisesController.updateExercises);
 /*
 router.post("/", ExercisesController.createExercises);
 */
- router.post("/", upload, ExercisesController.createExercises);
+router.post('/', upload.single('image'), ExercisesController.createExercises);
+router.put('/:id', upload.single('image'), ExercisesController.updateExercises);
+
 module.exports = router;
