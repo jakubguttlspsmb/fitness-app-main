@@ -2,13 +2,10 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   Dimensions,
-  TouchableHighlight,
   Pressable,
-  Button,
-  ScrollView,
   FlatList,
+  ImageBackground
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
@@ -18,7 +15,6 @@ import { userIpAddress } from "../LoginPage/LoginPage";
 
 import { category } from "./Exercises";
 export let name = "";
-
 
 export default function ByCategoryPage() {
   const navigation = useNavigation();
@@ -34,7 +30,7 @@ export default function ByCategoryPage() {
   };
 
   const ToExersise = (boban) => {
-    name = boban
+    name = boban;
     navigation.navigate("Exercise");
   };
 
@@ -58,8 +54,8 @@ export default function ByCategoryPage() {
       color: "#405D72",
     },
     boxes: {
-      width: (width / 100) * 42,
-      height: (height / 100) * 10,
+      width: (width / 100) * 40,
+      height: (height / 100) * 15,
       backgroundColor: "grey",
       borderStyle: "solid",
       borderWidth: 1,
@@ -70,15 +66,21 @@ export default function ByCategoryPage() {
     mediumText: {
       fontSize: (width / 100) * 3 + (height / 100) * 2,
       textAlign: "center",
+      color:"white"
     },
     container: {
       alignItems: "center",
+    },
+    backgroudImages: {
+      height: "100%",
+      width: "100%",
+      justifyContent: "center",
     },
   });
 
   return (
     <>
-  <Text style={styles.bigText}>Exercises</Text>
+      <Text style={styles.bigText}>Exercises</Text>
       <View style={styles.icons}>
         <Pressable onPress={back}>
           <Entypo name="back" size={(height / 100) * 6} color="#405D72" />
@@ -91,8 +93,18 @@ export default function ByCategoryPage() {
           numColumns={2}
           data={exercises}
           renderItem={({ item }) => (
-            <Pressable onPress={() => ToExersise(item.name)} style={styles.boxes}>
-              <Text style={styles.mediumText}>{item.name}</Text>
+            <Pressable
+              onPress={() => ToExersise(item.name)}
+              style={styles.boxes}
+            >
+              <ImageBackground
+              style={styles.backgroudImages}
+                source={{
+                  uri: `http://${userIpAddress}:3000${item.imageUrl[0]}`,
+                }}
+              >
+                <Text style={styles.mediumText}>{item.name}</Text>
+              </ImageBackground>
             </Pressable>
           )}
           keyExtractor={(item) => item._id}

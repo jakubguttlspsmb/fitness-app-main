@@ -48,7 +48,6 @@ exports.updateUsers = async (req, res) => {
   try {
     const data = {
       name: req.body.name,
-      fullName: req.body.fullName,
       password: req.body.password,
       ip: req.body.ip,
     };
@@ -71,7 +70,6 @@ exports.createUsers = async (req, res) => {
   try {
     const data = new Users({
       name: req.body.name,
-      fullName: req.body.fullName,
       password: req.body.password,
       ip: req.body.ip,
     });

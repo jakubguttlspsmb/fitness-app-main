@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export let date = "";
 
-export default function UserFitnessData() {
+export default function UserDietData() {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   const [exercises, setExercises] = useState([]);

@@ -7,52 +7,22 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
-import { userIpAddress } from "../LoginPage/LoginPage";
 
-import { name } from "./ByCategoryPage";
-import { category } from "./Exercises";
+import { food } from "./FindFood";
 
-export let met = "";
-
-export default function Exercise() {
+export default function FoundFood() {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
-  const [exercise, setExercise] = useState({});
-  const [counter, setCounter] = useState(1);
-
-  useEffect(() => {
-    getExercise();
-  }, []);
-
-  const getExercise = async () => {
-    const response = await fetch(
-      `http://${userIpAddress}:3000/exercises/${category}/${name}`
-    );
-    const json = await response.json();
-    console.log(json.payload);
-    met = (json.payload.met);
-    setExercise(json.payload);
-
-  };
 
   const back = () => {
-    navigation.navigate("ByCategoryPage");
+    navigation.navigate("FindFood");
   };
 
   const Add = () => {
-    navigation.navigate("SaveData");
-  };
-
-  const changeImage = async () => {
-    console.log(counter);
-    setCounter(counter + 1);
-    if (counter >= exercise.amountOfImages - 1) {
-      setCounter(1);
-    }
+    navigation.navigate("SaveData2");
   };
 
   const styles = StyleSheet.create({
@@ -102,7 +72,7 @@ export default function Exercise() {
 
   return (
     <>
-      <Text style={styles.bigText}>{name}</Text>
+      <Text style={styles.bigText}>{food.name}</Text>
       <View style={styles.icons}>
         <Pressable onPress={back}>
           <Entypo name="back" size={(height / 100) * 6} color="#405D72" />
@@ -110,14 +80,15 @@ export default function Exercise() {
       </View>
       <View style={styles.container}>
         <Text style={styles.smallText}>
-          Estimated burned calories per minute: {exercise.met}
+          Estimated burned calories per minute: {food.name}
         </Text>
-        <Text style={styles.smallText}>Exercises: {exercise.category}</Text>
+        <Text style={styles.smallText}>Exercises: {food.name}</Text>
         <Text style={styles.smallText}>
-          Description: {exercise.description}
+          Description: {food.name}
         </Text>
-        <Pressable onPress={changeImage}>
-          {exercise.imageUrl && (
+        
+        {/*<Pressable onPress={changeImage}>
+          {food.imageUrl && (
             <Image
               source={{
                 uri: `http://${userIpAddress}:3000${exercise.imageUrl[counter]}`,
@@ -125,7 +96,7 @@ export default function Exercise() {
               style={styles.image}
             />
           )}
-        </Pressable>
+        </Pressable>*/}
         <Pressable onPress={Add}>
           <Entypo
             name="add-to-list"

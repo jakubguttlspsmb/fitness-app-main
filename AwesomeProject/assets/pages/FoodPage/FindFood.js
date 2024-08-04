@@ -15,39 +15,34 @@ import { useNavigation } from "@react-navigation/native";
 import { userIpAddress } from "../LoginPage/LoginPage";
 import { useState, useEffect, useRef } from "react";
 
-export let category = "";
+export let food = {};
 
-export default function Exercices() {
+export default function FindFood() {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
-  const [exercises, setExercises] = useState([]);
-  const [isLoaded, setLoaded] = useState(false);
+  const [userSearch, seUserSearch] = useState();
 
-  const logOff = () => {
-    navigation.navigate("Fit");
+  const Back = () => {
+    navigation.navigate("Food");
   };
 
-  const ToCategory = (selectedCategory) => {
-    category = selectedCategory;
-    navigation.navigate("ByCategoryPage");
+  const handleInputChange = (text) => {
+    seUserSearch(text);
   };
 
-  useEffect(() => {
-    getExercises();
-  }, []);
-
-  const getExercises = async () => {
-    const response = await fetch(`http://${userIpAddress}:3000/exercises`);
-    console.log("succes finding data");
-    const json = await response.json();
-    setExercises(json.payload);
+  const Search = async () => {
+    try {
+      const response = await fetch(
+        `http://${userIpAddress}:3000/food/${userSearch}`
+      );
+      const json = await response.json();
+      console.log(json.payload);
+      food = json.payload;
+      navigation.navigate("FoundFood");
+    } catch (e) {
+      console.error(e);
+    }
   };
-
-  const getUniqueValues = (data, key) => {
-    return [...new Map(data.map((item) => [item[key], item])).values()];
-  };
-
-  const uniqueData = getUniqueValues(exercises, "category");
 
   const styles = StyleSheet.create({
     icons: {
@@ -78,31 +73,46 @@ export default function Exercices() {
     },
     container: {
       alignItems: "center",
+      marginTop: height / 20,
+    },
+    input: {
+      width: "70%",
+      fontSize: (width / 100) * 2 + (height / 100) * 3,
+      textAlign: "center",
+      borderColor: "black",
+      borderWidth: 2,
+      borderStyle: "solid",
+      borderRadius: 10,
+      color: "#758694",
+      backgroundColor: "#FFF8F3",
+    },
+    buttonText: {
+      fontSize: (width / 100) * 3 + (height / 100) * 2,
+      textAlign: "center",
+      fontWeight: "bold",
+      color: "#405D72",
+      padding: "5%",
     },
   });
 
   return (
     <>
-      <Text style={styles.bigText}>Categories</Text>
+      <Text style={styles.bigText}>Find food</Text>
       <View style={styles.icons}>
-        <Pressable onPress={logOff}>
+        <Pressable onPress={Back}>
           <Entypo name="back" size={(height / 100) * 6} color="#405D72" />
         </Pressable>
       </View>
       <View style={styles.container}>
-        <FlatList
-          style={styles.list}
-          columnWrapperStyle
-          numColumns={2}
-          data={uniqueData}
-          renderItem={({ item }) => (
-            <Pressable onPress={() => ToCategory(item.category)} style={styles.boxes}>
-              <Text style={styles.mediumText}>{item.category}</Text>
-            </Pressable>
-          )}
-          keyExtractor={(item) => item._id}
-        />
+        <TextInput
+          style={styles.input}
+          onChangeText={handleInputChange}
+          placeholder="Search for food"
+        ></TextInput>
       </View>
+      <TouchableHighlight underlayColor={"grey"} onPress={Search}>
+        <Text style={styles.buttonText}>ENTER</Text>
+      </TouchableHighlight>
     </>
   );
 }

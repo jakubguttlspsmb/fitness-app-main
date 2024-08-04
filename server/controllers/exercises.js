@@ -66,6 +66,8 @@ exports.updateExercises = async (req, res) => {
       met: req.body.met,
       category: req.body.category,
       description: req.body.description,
+      amountOfImages: req.body.amountOfImages,
+      imageUrl: imageUrls,
     };
     const result = await Exercises.findByIdAndUpdate(req.params.id, data);
     if (result) {
@@ -84,12 +86,14 @@ exports.updateExercises = async (req, res) => {
 
 exports.createExercises = async (req, res) => {
   try {
+    const imageUrls = req.files.map(file => `/uploads/${file.filename}`);
     const data = new Exercises({
       name: req.body.name,
       met: req.body.met,
       category: req.body.category,
       description: req.body.description,
-      imageUrl: req.file ? `../uploads/${req.file.filename}` : undefined,
+      amountOfImages: req.body.amountOfImages,
+      imageUrl: imageUrls,
     });
     const result = await data.save();
     if (result) {
