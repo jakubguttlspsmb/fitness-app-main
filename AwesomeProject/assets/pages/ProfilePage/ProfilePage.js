@@ -14,13 +14,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { userName } from "../LoginPage/LoginPage";
 import { AntDesign } from "@expo/vector-icons";
 
-
-
 export default function ProfilePage() {
   const lastTap = useRef(null);
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
-
 
   const toFit = () => {
     const now = Date.now();
@@ -55,48 +52,51 @@ export default function ProfilePage() {
       position: "absolute",
       left: 0,
       width: (width / 100) * 10,
-      position: "absolute",
+      justifyContent: "center",
+      alignItems: "center",
     },
     invisibleButton2: {
       height: height,
       width: (width / 100) * 10,
       position: "absolute",
       right: 0,
+      justifyContent: "center",
+      alignItems: "center",
     },
     bigText: {
-        fontSize: (width / 100) * 4 + (height / 100) * 2,
-        textAlign: "center",
-        fontWeight: "bold",
-        color: "#405D72",
-      },
-      icons: {
-        alignItems: "center",
-        paddingTop: (height / 100) * 75,
-      },
-      mediumText: {
-        fontSize: (width / 100) * 3 + (height / 100) * 2,
-        paddingTop: "5%",
-        color: "#405D72",
-        textAlign:"center"
-      },
+      fontSize: (width / 100) * 4 + (height / 100) * 2,
+      textAlign: "center",
+      fontWeight: "bold",
+      color: "#405D72",
+    },
+    icons: {
+      alignItems: "center",
+      paddingTop: (height / 100) * 75,
+    },
+    mediumText: {
+      fontSize: (width / 100) * 3 + (height / 100) * 2,
+      paddingTop: "5%",
+      color: "#405D72",
+      textAlign: "center",
+    },
   });
   return (
     <>
       <Text style={styles.bigText}>Profile</Text>
       <Text style={styles.mediumText}>Name: {userName}</Text>
       <View style={styles.icons}>
-            <Pressable onPress={logOff}>
-              <AntDesign name="logout" size={height/100*6} color="#405D72" />
-            </Pressable>
-          </View>
-      <TouchableOpacity
-            onPress={toFit}
-            style={styles.invisibleButton1}
-          ></TouchableOpacity>
-          <TouchableOpacity
-            onPress={toFood}
-            style={styles.invisibleButton2}
-          ></TouchableOpacity>
+        <Pressable onPress={logOff}>
+          <AntDesign name="logout" size={(height / 100) * 6} color="#405D72" />
+        </Pressable>
+      </View>
+      <TouchableOpacity onPress={toFit} style={styles.invisibleButton1}>
+      
+        <AntDesign name="caretleft" size={24} color="black" />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={toFood} style={styles.invisibleButton2}>
+      
+        <AntDesign name="caretright" size={24} color="black" />
+      </TouchableOpacity>
     </>
   );
 }

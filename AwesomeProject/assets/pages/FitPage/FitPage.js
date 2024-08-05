@@ -12,6 +12,7 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 
 export default function FitPage() {
@@ -82,27 +83,28 @@ export default function FitPage() {
       position: "absolute",
       left: 0,
       width: (width / 100) * 10,
-      position: "absolute",
+      justifyContent: "center",
+      alignItems:"center",
     },
     invisibleButton2: {
       height: height,
       width: (width / 100) * 10,
       position: "absolute",
       right: 0,
+      justifyContent: "center",
+      alignItems:"center",
     },
   });
   return (
     <>
       <View style={styles.view2}>
         <Text style={styles.head}>Fit </Text>
-        <TouchableOpacity
-          onPress={toFood}
-          style={styles.invisibleButton1}
-        ></TouchableOpacity>
-        <TouchableOpacity
-          onPress={toProfil}
-          style={styles.invisibleButton2}
-        ></TouchableOpacity>
+        <TouchableOpacity onPress={toFood} style={styles.invisibleButton1}>
+          <AntDesign name="caretleft" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toProfil} style={styles.invisibleButton2}>
+          <AntDesign name="caretright" size={24} color="black" />
+        </TouchableOpacity>
         <View style={styles.container}>
           <Pressable style={styles.buttons} onPress={toExercises}>
             <ImageBackground
