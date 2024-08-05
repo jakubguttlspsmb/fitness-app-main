@@ -6,6 +6,7 @@ const schema = mongoose.Schema({
   bil: { type: Number, required: true },
   sach: { type: Number, required: true },
   tuk: { type: Number, required: true },
+  imageUrl: { type: Array, required: true },
 });
 
 module.exports = mongoose.model("Food", schema);

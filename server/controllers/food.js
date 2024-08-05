@@ -1,4 +1,6 @@
 const Food = require("../models/food");
+const upload = require('../config/multerConfig');
+
 
 exports.getAllFood = async (req, res) => {
   try {
@@ -46,12 +48,14 @@ exports.deleteFood = async (req, res) => {
 
 exports.updateFood = async (req, res) => {
   try {
+    const imageUrls = req.files.map(file => `/uploads/${file.filename}`);
     const data = {
       name: req.body.name,
       kcal: req.body.kcal,
       bil: req.body.bil,
       sach: req.body.sach,
       tuk: req.body.tuk,
+      imageUrl: imageUrls,
     };
     const result = await Food.findByIdAndUpdate(req.params.id, data);
     if (result) {
@@ -70,12 +74,14 @@ exports.updateFood = async (req, res) => {
 
 exports.createFood = async (req, res) => {
   try {
+    const imageUrls = req.files.map(file => `/uploads/${file.filename}`);
     const data = new Food({
       name: req.body.name,
       kcal: req.body.kcal,
       bil: req.body.bil,
       sach: req.body.sach,
       tuk: req.body.tuk,
+      imageUrl: imageUrls,
     });
     const result = await data.save();
     if (result) {

@@ -15,9 +15,9 @@ exports.getAllSaveExercises = async (req, res) => {
   }
 };
 
-exports.getSaveExercisesByName = async (req, res) => {
+exports.getSaveExercisesByDate = async (req, res) => {
   try {
-    const result = await SaveExercises.findOne({ name: req.params.name });
+    const result = await SaveExercises.find({ date: req.params.date });
     if (result) {
       return res.status(200).send({
         msg: "SaveExercises found",

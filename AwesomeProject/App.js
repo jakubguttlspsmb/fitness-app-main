@@ -13,6 +13,7 @@ import UserDietData from "./assets/pages/FoodPage/UserDietData";
 import FindFood from "./assets/pages/FoodPage/FindFood";
 import FoundFood from "./assets/pages/FoodPage/FoundFood";
 import SaveData2 from "./assets/pages/FoodPage/SaveData2";
+import DateData2 from "./assets/pages/FoodPage/DateData2";
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -51,6 +52,7 @@ export default function App() {
           <Stack.Screen name="FindFood" component={FindFood} />
           <Stack.Screen name="FoundFood" component={FoundFood} />
           <Stack.Screen name="SaveData2" component={SaveData2} />
+          <Stack.Screen name="DateData2" component={DateData2} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

@@ -10,12 +10,14 @@ import {
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
+import { userIpAddress } from "../LoginPage/LoginPage";
 
 import { food } from "./FindFood";
 
 export default function FoundFood() {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
+  const [counter, setCounter] = useState(1);
 
   const back = () => {
     navigation.navigate("FindFood");
@@ -50,8 +52,10 @@ export default function FoundFood() {
       margin: (width / 100) * 1.5 + (height / 100) * 1,
     },
     mediumText: {
-      fontSize: (width / 100) * 3 + (height / 100) * 2,
+      fontSize: (width / 100) * 2 + (height / 100) * 2,
       textAlign: "center",
+      fontWeight: "bold",
+      color: "#405D72",
     },
     container: {
       alignItems: "center",
@@ -61,12 +65,15 @@ export default function FoundFood() {
       width: "80%",
       paddingTop: "3%",
       fontSize: (width / 100) * 1.5 + (height / 100) * 1.4,
+      fontWeight: "bold",
+      color: "#405D72",
     },
     image: {
       marginTop: (height / 100) * 3,
       marginBottom: (height / 100) * 3,
       width: (width / 100) * 80,
       height: (height / 100) * 30,
+      resizeMode: "contain",
     },
   });
 
@@ -79,24 +86,21 @@ export default function FoundFood() {
         </Pressable>
       </View>
       <View style={styles.container}>
-        <Text style={styles.smallText}>
-          Estimated burned calories per minute: {food.name}
-        </Text>
-        <Text style={styles.smallText}>Exercises: {food.name}</Text>
-        <Text style={styles.smallText}>
-          Description: {food.name}
-        </Text>
-        
-        {/*<Pressable onPress={changeImage}>
-          {food.imageUrl && (
-            <Image
-              source={{
-                uri: `http://${userIpAddress}:3000${exercise.imageUrl[counter]}`,
-              }}
-              style={styles.image}
-            />
-          )}
-        </Pressable>*/}
+        <Text style={styles.mediumText}>Values for 100g</Text>
+        <Text style={styles.smallText}>Kcal: {food.kcal}</Text>
+        <Text style={styles.smallText}>Proteins: {food.bil}</Text>
+        <Text style={styles.smallText}>Fats: {food.sach}</Text>
+        <Text style={styles.smallText}>Carbohydrates: {food.tuk}</Text>
+
+        {food.imageUrl && (
+          <Image
+            source={{
+              uri: `http://${userIpAddress}:3000${food.imageUrl[0]}`,
+            }}
+            style={styles.image}
+          />
+        )}
+
         <Pressable onPress={Add}>
           <Entypo
             name="add-to-list"

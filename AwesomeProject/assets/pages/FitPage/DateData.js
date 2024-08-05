@@ -28,7 +28,7 @@ export default function DateData() {
   }, []);
 
   const getExercises = async () => {
-    const response = await fetch(`http://${userIpAddress}:3000/saveExercises`);
+    const response = await fetch(`http://${userIpAddress}:3000/saveExercises/${date}`);
     const json = await response.json();
     setExercises(json.payload);
   };

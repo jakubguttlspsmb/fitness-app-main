@@ -119,7 +119,7 @@ export default function UserFitnessData() {
               <Text style={styles.mediumText}>{item.date}</Text>
             </Pressable>
           )}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item.date}
         />
       </View>
     </>

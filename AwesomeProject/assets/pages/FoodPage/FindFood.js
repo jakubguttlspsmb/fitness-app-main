@@ -35,15 +35,21 @@ export default function FindFood() {
       const response = await fetch(
         `http://${userIpAddress}:3000/food/${userSearch}`
       );
+      if (!response.ok) {
+        throw new Error(`nonexisting food: ${userSearch}`);
+      }
       const json = await response.json();
-      console.log(json.payload);
-      food = json.payload;
-      navigation.navigate("FoundFood");
+      if (json && json.payload) {
+        console.log(json.payload);
+        food = json.payload;
+        navigation.navigate("FoundFood");
+      } else {
+        console.error("food not found");
+      }
     } catch (e) {
       console.error(e);
     }
   };
-
   const styles = StyleSheet.create({
     icons: {
       alignItems: "center",

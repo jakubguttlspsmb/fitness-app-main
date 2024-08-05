@@ -8,9 +8,9 @@ router.get("/", SaveExercisesController.getAllSaveExercises);
 //localhost:3000/SaveExercises/5sa4d949qw86d5sa4d6sa
 // https://localhost:3000/SaveExercises
 //req.params.id
-router.get("/:category/:name", SaveExercisesController.getSaveExercisesByName);
+router.get("/", SaveExercisesController.getAllSaveExercises);
 
-router.get("/:category", SaveExercisesController.getSaveExercisesByCategory);
+router.get("/:date", SaveExercisesController.getSaveExercisesByDate);
 
 router.delete("/:id", SaveExercisesController.deleteSaveExercises);
 

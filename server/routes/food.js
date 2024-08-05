@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 
 const FoodController = require("../controllers/food");
+const upload = require('../config/multerConfig');
+
 
 router.get("/", FoodController.getAllFood);
 
@@ -13,8 +15,8 @@ router.get("/:name", FoodController.getFoodByName);
 
 router.delete("/:name", FoodController.deleteFood);
 
-router.put("/:name", FoodController.updateFood);
+router.put("/:name",  upload.single('image'), FoodController.updateFood);
 
-router.post("/", FoodController.createFood);
+router.post("/", upload.array('images', 10), FoodController.createFood);
 
 module.exports = router;

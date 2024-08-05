@@ -95,8 +95,9 @@ export default function Exercise() {
     image: {
       marginTop: (height / 100) * 3,
       marginBottom: (height / 100) * 3,
-      width: (width / 100) * 80,
+      width: (width / 100) * 100,
       height: (height / 100) * 30,
+      resizeMode:"contain"
     },
   });
 

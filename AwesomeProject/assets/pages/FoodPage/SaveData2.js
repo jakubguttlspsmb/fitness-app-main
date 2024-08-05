@@ -13,7 +13,9 @@ import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
+import { userIpAddress, userName } from "../LoginPage/LoginPage";
 
+import { food } from "./FindFood";
 
 export default function SaveData2() {
   const navigation = useNavigation();
@@ -21,13 +23,16 @@ export default function SaveData2() {
   const date = new Date();
   const today = date.getDate();
   const currentMonth = date.getMonth() + 1;
+  const [weight, setWeigth] = useState(0);
+  const [food2, setFood2] = useState(0);
 
-  const handleTimeInputChange = (text) => {
-    setTime(text);
+  const handleInputChange = (text) => {
+    setWeigth(text);
+    setFood2({"kcal":Math.round((food.kcal/100)*text),"bil":Math.round((food.bil/100)*text),"sach":Math.round((food.sach/100)*text),"tuk":Math.round((food.tuk/100)*text) });
   };
 
   const back = () => {
-    navigation.navigate("Exercise");
+    navigation.navigate("FoundFood");
   };
 
   const submitValues = async () => {
@@ -38,30 +43,22 @@ export default function SaveData2() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: `${name}`,
-        calories: `${calories}`,
-        category: category,
+        name: `${userName}`,
+        foodName: `${food.name}`,
+        kcal: `${food2.kcal}`,
+        bil: `${food2.bil}`,
+        sach: `${food2.sach}`,
+        tuk: `${food2.tuk}`,
         date: `${today}.${currentMonth}`,
       }),
     });
-    navigation.navigate("ByCategoryPage");
+    navigation.navigate("DietData");
   };
 
   useEffect(() => {
-    setCalories(met2 * time);
-  }, [time, met2]);
-
-  useEffect(() => {
-    setMet2(met);
+    console.log(food);
   }, []);
 
-  useEffect(() => {
-    if (intensity === 2) {
-      setMet2(met + 2);
-    } else if (intensity === 1) {
-      setMet2(met);
-    }
-  }, [intensity]);
 
   const styles = StyleSheet.create({
     body: {
@@ -88,6 +85,7 @@ export default function SaveData2() {
       borderColor: "black",
       justifyContent: "center",
       margin: (width / 100) * 1.5 + (height / 100) * 1,
+      fontSize: (width / 100) * 3 + (height / 100) * 2,
     },
     mediumText: {
       fontSize: (width / 100) * 3 + (height / 100) * 2,
@@ -113,8 +111,8 @@ export default function SaveData2() {
   return (
     <>
       <StatusBar hidden></StatusBar>
-      <Text style={styles.bigText}>Save exercise</Text>
-      <Text style={styles.bigText}>{name}</Text>
+      <Text style={styles.bigText}>Save food</Text>
+      <Text style={styles.bigText}>{food.name}</Text>
 
       <View style={styles.icons}>
         <Pressable onPress={back}>
@@ -122,22 +120,18 @@ export default function SaveData2() {
         </Pressable>
       </View>
       <View style={styles.body}>
-        <Text style={styles.smallText}>Insert length of exercising</Text>
+        <Text style={styles.smallText}>Insert weight of food</Text>
         <TextInput
           style={styles.input}
-          onChangeText={handleTimeInputChange}
+          onChangeText={handleInputChange}
           placeholder="0"
           keyboardType="decimal-pad"
         />
-        <Text style={styles.smallText}>Intensity of your exercising</Text>
-        <RNPickerSelect
-          onValueChange={(value) => setIntensity(value)}
-          items={[
-            { label: "High", value: 2 },
-            { label: "Low", value: 1 },
-          ]}
-        />
-        <Text style={styles.mediumText}>{calories} calories</Text>
+        <Text style={styles.mediumText}>Values for {weight} grams</Text>
+        <Text style={styles.smallText}>Kcal:  {food2.kcal}</Text>
+        <Text style={styles.smallText}>Proteins: {food2.bil}</Text>
+        <Text style={styles.smallText}>Fats: {food2.tuk}</Text>
+        <Text style={styles.smallText}>Carbohydrates: {food2.sach}</Text>
         <TouchableHighlight underlayColor={"grey"} onPress={submitValues}>
           <Text style={styles.buttonText}>ENTER</Text>
         </TouchableHighlight>
