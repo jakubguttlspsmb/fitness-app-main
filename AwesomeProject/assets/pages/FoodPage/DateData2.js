@@ -121,7 +121,7 @@ export default function DateData2() {
           renderItem={({ item }) => (
             <View style={styles.container2}>
               <Text style={styles.mediumText}>{item.foodName}</Text>
-              <Text style={styles.mediumText}>{item.kcal}g</Text>
+              <Text style={styles.mediumText}>{item.kcal}</Text>
               <Text style={styles.mediumText}>{item.bil}g</Text>
               <Text style={styles.mediumText}>{item.sach}g</Text>
               <Text style={styles.mediumText}>{item.tuk}g</Text>
