@@ -10,7 +10,9 @@ router.get("/", SaveFoodController.getAllSaveFood);
 //req.params.id
 router.get("/", SaveFoodController.getAllSaveFood);
 
-router.get("/:date", SaveFoodController.getSaveFoodByDate);
+router.get("/:name/:date", SaveFoodController.getSaveFoodByDate);
+
+router.get("/:name", SaveFoodController.getSaveFoodByName);
 
 router.delete("/:id", SaveFoodController.deleteSaveFood);
 

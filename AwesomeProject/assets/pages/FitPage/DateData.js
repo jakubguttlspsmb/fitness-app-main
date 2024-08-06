@@ -12,7 +12,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect, useRef } from "react";
 import { date } from "./UserFitnessData";
-import { userIpAddress } from "../LoginPage/LoginPage";
+import { userIpAddress, userName } from "../LoginPage/LoginPage";
 
 export default function DateData() {
   const navigation = useNavigation();
@@ -28,7 +28,7 @@ export default function DateData() {
   }, []);
 
   const getExercises = async () => {
-    const response = await fetch(`http://${userIpAddress}:3000/saveExercises/${date}`);
+    const response = await fetch(`http://${userIpAddress}:3000/saveExercises/${userName}/${date}`);
     const json = await response.json();
     setExercises(json.payload);
   };
@@ -106,7 +106,7 @@ export default function DateData() {
           data={exercises}
           renderItem={({ item }) => (
             <View style={styles.container2}>
-              <Text style={styles.mediumText}>{item.name}</Text>
+              <Text style={styles.mediumText}>{item.exerciseName}</Text>
               <Text style={styles.mediumText}>{item.calories}cal</Text>
               <Pressable onPress={() => Delete(item._id)} style={styles.icon}>
                 <Ionicons name="trash-bin" size={35} color="#405D72" />

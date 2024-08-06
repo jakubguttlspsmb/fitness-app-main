@@ -14,6 +14,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useState, useEffect, useCallback } from "react";
 import { userIpAddress } from "../LoginPage/LoginPage";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { userName } from "../LoginPage/LoginPage";
 
 
 export let date = "";
@@ -29,7 +30,7 @@ export default function UserDietData() {
 
   const getFood = async () => {
     try {
-      const response = await fetch(`http://${userIpAddress}:3000/saveFood`);
+      const response = await fetch(`http://${userIpAddress}:3000/saveFood/${userName }`);
       if (response.ok) {
         const json = await response.json();
         const groupedData = groupByDate(json.payload);

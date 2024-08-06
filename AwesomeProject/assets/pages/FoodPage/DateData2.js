@@ -12,7 +12,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect, useRef } from "react";
 import { date } from "./UserDietData";
-import { userIpAddress } from "../LoginPage/LoginPage";
+import { userIpAddress, userName } from "../LoginPage/LoginPage";
 
 export default function DateData2() {
   const navigation = useNavigation();
@@ -29,7 +29,7 @@ export default function DateData2() {
 
   const getFood = async () => {
     const response = await fetch(
-      `http://${userIpAddress}:3000/saveFood/${date}`
+      `http://${userIpAddress}:3000/saveFood/${userName}/${date}`
     );
     const json = await response.json();
     setFood(json.payload);

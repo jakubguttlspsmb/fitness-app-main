@@ -11,9 +11,9 @@ import {
   FlatList,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
-import { userIpAddress } from "../LoginPage/LoginPage";
-import { useNavigation } from "@react-navigation/native";
+import { useState, useEffect,useCallback } from "react";
+import { userIpAddress, userName } from "../LoginPage/LoginPage";
+import { useNavigation,useFocusEffect } from "@react-navigation/native";
 
 export let date = "";
 
@@ -28,14 +28,15 @@ export default function UserFitnessData() {
 
   const getExercises = async () => {
     try {
-      const response = await fetch(`http://${userIpAddress}:3000/saveExercises`);
+      const response = await fetch(
+        `http://${userIpAddress}:3000/saveExercises/${userName}`
+      );
       if (response.ok) {
         const json = await response.json();
         const groupedData = groupByDate(json.payload);
         setExercises(groupedData);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const groupByDate = (data) => {
@@ -54,11 +55,14 @@ export default function UserFitnessData() {
     date = selectedDate;
     console.log(date);
     navigation.navigate("DateData");
+    setExercises();
   };
 
-  useEffect(() => {
-    getExercises();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getExercises();
+    }, [])
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -73,7 +77,7 @@ export default function UserFitnessData() {
     icons: {
       alignItems: "center",
       position: "absolute",
-      zIndex:1,
+      zIndex: 1,
     },
     bigText: {
       fontSize: (width / 100) * 4 + (height / 100) * 2,

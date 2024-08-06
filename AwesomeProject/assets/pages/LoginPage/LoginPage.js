@@ -13,6 +13,8 @@ import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export let userName = "";
 export let userIpAddress = "";
@@ -27,8 +29,8 @@ export default function LoginPage() {
   const [showIpAddress, setShowIpAddress] = useState(false);
   const navigation = useNavigation();
   const [saveData, setSaveData] = useState(false);
-  const [backgroundColor1, setBackGroundColor1] = useState("#758694");
-  const [backgroundColor2, setBackGroundColor2] = useState("#758694");
+  const [backgroundColor1, setBackGroundColor1] = useState("none");
+  const [backgroundColor2, setBackGroundColor2] = useState("");
 
   const handleIpInputChange = (text) => {
     setIpAddress(text);
@@ -66,14 +68,14 @@ export default function LoginPage() {
 
   const userChoiseTrue = () => {
     setSaveData(true);
-    setBackGroundColor1("#000000");
-    setBackGroundColor2("#758694");
+    setBackGroundColor1("");
+    setBackGroundColor2("none");
   };
 
   const userChoiseFalse = () => {
     setSaveData(false);
-    setBackGroundColor1("#758694");
-    setBackGroundColor2("#000000");
+    setBackGroundColor1("none");
+    setBackGroundColor2("");
   };
 
   useEffect(() => {
@@ -108,14 +110,13 @@ export default function LoginPage() {
         if (saveData === true) {
           userName = name;
           userIpAddress = ipAddress;
-          setCount2(false)
+          setCount2(false);
           storeData();
           navigation.navigate("Fit");
-
         } else {
           userName = name;
           userIpAddress = ipAddress;
-          setCount2(false)
+          setCount2(false);
           deleteData();
           navigation.navigate("Fit");
         }
@@ -180,11 +181,12 @@ export default function LoginPage() {
       padding: "5%",
     },
     buttonContainer: {
-      width: "25%",
+      width: "30%",
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
       paddingTop: "2%",
+      alignItems:"center"
     },
   });
   return (
@@ -216,21 +218,16 @@ export default function LoginPage() {
             />
           </>
         )}
-
-        <Text style={styles.smallText}>Save login data</Text>
         <View style={styles.buttonContainer}>
-          <Button
-            onPress={userChoiseTrue}
-            title="yes"
-            color={backgroundColor1}
-          />
-          <Button
-            onPress={userChoiseFalse}
-            title="no"
-            color={backgroundColor2}
-          />
+          <Text style={styles.smallText}>Save login data</Text>
+          <Pressable onPress={userChoiseFalse} display={backgroundColor1}>
+          <FontAwesome name="check-square" size={26} color="black" />
+          </Pressable>
+          <Pressable onPress={userChoiseTrue} display={backgroundColor2}>
+          <FontAwesome name="square" size={26} color="black" />
+          </Pressable>
         </View>
-        { count2 && showIpAddress && (
+        {count2 && showIpAddress && (
           <>
             <Text style={styles.error}>
               something is wrong check your name, password or ip address of the

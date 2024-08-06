@@ -20,7 +20,9 @@ export let food = {};
 export default function FindFood() {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
-  const [userSearch, seUserSearch] = useState();
+  const [userSearch, seUserSearch] = useState(0);
+  const [allFood, setAllFood] = useState([]);
+  const [short, setShort] = useState([]);
 
   const Back = () => {
     navigation.navigate("Food");
@@ -29,6 +31,33 @@ export default function FindFood() {
   const handleInputChange = (text) => {
     seUserSearch(text);
   };
+
+  const ToFood = (boban) => {
+    seUserSearch(boban);
+  };
+
+  useEffect(() => {
+    FindAllFood();
+  }, []);
+
+  const FindAllFood = async () => {
+    try {
+      const response = await fetch(`http://${userIpAddress}:3000/food`);
+      const json = await response.json();
+      const names = json.payload.map((item) => item.name);
+      setAllFood(names);
+
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    const listener = allFood.filter((item) => item.startsWith(userSearch));
+    const shortened = listener.slice(0, 2);
+    setShort(shortened)
+  }, [userSearch]);
+
 
   const Search = async () => {
     try {
@@ -50,6 +79,7 @@ export default function FindFood() {
       console.error(e);
     }
   };
+
   const styles = StyleSheet.create({
     icons: {
       alignItems: "center",
@@ -103,7 +133,7 @@ export default function FindFood() {
 
   return (
     <>
-      <Text style={styles.bigText}>Find food</Text>
+      <Text style={styles.bigText}>Find food </Text>
       <View style={styles.icons}>
         <Pressable onPress={Back}>
           <Entypo name="back" size={(height / 100) * 6} color="#405D72" />
@@ -114,7 +144,20 @@ export default function FindFood() {
           style={styles.input}
           onChangeText={handleInputChange}
           placeholder="Search for food"
+          value={userSearch}
         ></TextInput>
+        {userSearch.length > 0 && (
+          <FlatList
+            style={styles.list}
+            data={short}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => ToFood(item)} style={styles.boxes}>
+                <Text style={styles.mediumText}>{item}</Text>
+              </Pressable>
+            )}
+            keyExtractor={(item) => item}
+          />
+        )}
       </View>
       <TouchableHighlight underlayColor={"grey"} onPress={Search}>
         <Text style={styles.buttonText}>ENTER</Text>

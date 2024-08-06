@@ -10,7 +10,9 @@ router.get("/", SaveExercisesController.getAllSaveExercises);
 //req.params.id
 router.get("/", SaveExercisesController.getAllSaveExercises);
 
-router.get("/:date", SaveExercisesController.getSaveExercisesByDate);
+router.get("/:name/:date", SaveExercisesController.getSaveExercisesByDate);
+
+router.get("/:name", SaveExercisesController.getSaveExercisesByName);
 
 router.delete("/:id", SaveExercisesController.deleteSaveExercises);
 

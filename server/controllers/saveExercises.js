@@ -29,9 +29,9 @@ exports.getSaveExercisesByDate = async (req, res) => {
     res.status(500).send(error);
   }
 };
-exports.getSaveExercisesByCategory = async (req, res) => {
+exports.getSaveExercisesByName = async (req, res) => {
   try {
-    const result = await SaveExercises.find({ category: req.params.category });
+    const result = await SaveExercises.find({ name: req.params.name });
     if (result) {
       return res.status(200).send({
         msg: "SaveExercises found",
@@ -62,6 +62,7 @@ exports.updateSaveExercises = async (req, res) => {
   try {
     const data = {
       name: req.body.name,
+      exerciseName: req.body.exerciseName,
       calories: req.body.calories,
       category: req.body.category,
       date: req.body.date,
@@ -85,6 +86,7 @@ exports.createSaveExercises = async (req, res) => {
   try {
     const data = new SaveExercises({
       name: req.body.name,
+      exerciseName: req.body.exerciseName,
       calories: req.body.calories,
       category: req.body.category,
       date: req.body.date,

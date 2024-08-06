@@ -48,7 +48,8 @@ export default function SaveData() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: `${name}`,
+        name: `${userName}`,
+        exerciseName:`${name}`,
         calories: `${calories}`,
         category: category,
         date: `${today}.${currentMonth}`,

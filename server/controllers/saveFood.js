@@ -17,7 +17,7 @@ exports.getAllSaveFood = async (req, res) => {
 
 exports.getSaveFoodByName = async (req, res) => {
   try {
-    const result = await SaveFood.findOne({ name: req.params.name });
+    const result = await SaveFood.find({ name: req.params.name });
     if (result) {
       return res.status(200).send({
         msg: "SaveFood found",
